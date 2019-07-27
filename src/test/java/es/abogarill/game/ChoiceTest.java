@@ -20,7 +20,6 @@ public class ChoiceTest {
      */
     @Test
     public void testValues() {
-        System.out.println("values");
         Choice[] expResult = {ROCK, PAPER, SCISSORS};
         Choice[] result = Choice.values();
         assertArrayEquals(expResult, result);
@@ -31,7 +30,6 @@ public class ChoiceTest {
      */
     @Test
     public void testValueOf() {
-        System.out.println("valueOf");
         String name = "ROCK";
         Choice expResult = ROCK;
         Choice result = Choice.valueOf(name);
@@ -44,7 +42,6 @@ public class ChoiceTest {
      */
     @Test
     public void testRockNotBeatsRock() {
-        System.out.println("beats");
         Choice otherPlayer = ROCK;
         Choice instance = ROCK;
         boolean expResult = false;
@@ -58,7 +55,6 @@ public class ChoiceTest {
      */
     @Test
     public void testRockNotBeatsPaper() {
-        System.out.println("beats");
         Choice otherPlayer = PAPER;
         Choice instance = ROCK;
         boolean expResult = false;
@@ -72,7 +68,6 @@ public class ChoiceTest {
      */
     @Test
     public void testRockBeatsScissors() {
-        System.out.println("beats");
         Choice otherPlayer = SCISSORS;
         Choice instance = ROCK;
         boolean expResult = true;
