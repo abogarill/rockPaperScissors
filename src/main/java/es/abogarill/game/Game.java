@@ -1,9 +1,12 @@
 package es.abogarill.game;
 
+import javax.ejb.Stateless;
+
 /**
  * The core game class
  * @author abogarill
  */
+@Stateless
 public class Game {
     
     /**
