@@ -1,0 +1,11 @@
+# Compiled class file
+*.class
+
+# Package Files #
+*.jar
+
+# Log file
+*.log
+nbproject/
+nb-configuration.xml
+target/
