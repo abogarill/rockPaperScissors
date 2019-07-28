@@ -9,12 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.ConcurrencyManagement;
-import javax.ejb.ConcurrencyManagementType;
-import javax.ejb.Lock;
-import javax.ejb.LockType;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.ejb.PostActivate;
+import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -23,25 +20,38 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * REST Service
+ * REST Game Service. 
+ * One Service is created for each Session.
+ * The Service life is binding to the Session life. 
  * @author abogarill
  */
 @Path("game")
-@Startup
-@Singleton(name = "GameService", mappedName = "GameService")
-@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
+@SessionScoped
+@Stateful(name = "GameService", mappedName = "GameService")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 public class GameService implements GameServiceLocal {
 
     /**
+     * Needed for Stateful EJB
+     */
+    public GameService() {
+    }        
+    
+    /**
      * Keep the rounds for each player.
      */
-    private static List<Round> playerRounds;
+    private List<Round> playerRounds;
     
+    /**
+     * Initialize the EJB
+     */
     @PostConstruct
+    @PostActivate
     public void initialize() {
-        playerRounds = new ArrayList<>();
+        if(playerRounds == null) {
+            playerRounds = new ArrayList<>();
+        }
     }
     
     /**
@@ -64,7 +74,6 @@ public class GameService implements GameServiceLocal {
      */
     @GET
     @Path("playRound")    
-    @Lock(LockType.READ)
     @Override
     public String playRound() {
         Choice player1 = ROCK;
@@ -80,7 +89,6 @@ public class GameService implements GameServiceLocal {
      */
     @GET
     @Path("showNumberOfRounds")    
-    @Lock(LockType.READ)
     @Override
     public Integer showNumberOfRounds() {
         return playerRounds.size();
@@ -94,7 +102,6 @@ public class GameService implements GameServiceLocal {
      */
     @GET
     @Path("showRoundsPlayed")    
-    @Lock(LockType.READ)
     @Override    
     public List<Round> showRoundsPlayed() {
         return Collections.unmodifiableList(playerRounds);
@@ -105,15 +112,12 @@ public class GameService implements GameServiceLocal {
      */
     @GET
     @Path("restartGame")    
-    @Lock(LockType.WRITE)
     @Override    
     public void restartGame() {
         playerRounds.clear();
     }
     
-    @Lock(LockType.WRITE)
-    protected void addRound(Round round) {
-        System.out.println(round);
+    private void addRound(Round round) {
         playerRounds.add(round);
     } 
     

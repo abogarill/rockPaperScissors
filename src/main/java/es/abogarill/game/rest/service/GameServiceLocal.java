@@ -7,7 +7,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 /**
- * Game Service local interface
+ * REST Game Service. 
+ * One Service is created for each Session.
+ * The Service life is binding to the Session life. 
  * @author abogarill
  */
 @Local
