@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.DependsOn;
 import javax.ejb.PostActivate;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
@@ -28,10 +29,21 @@ import javax.ws.rs.core.MediaType;
 @Path("/")
 @SessionScoped
 @Stateful(name = "GameService", mappedName = "GameService")
+@DependsOn({"DashboardService"})
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 public class GameService implements GameServiceLocal {
 
+    /**
+     * Needed for keep all the rounds
+     */
+    private DashboardServiceLocal dashboardService;
+
+    @Inject
+    public void setDashboardService(DashboardServiceLocal dashboardService) {
+        this.dashboardService = dashboardService;
+    }
+    
     /**
      * Needed for Stateful EJB
      */
@@ -70,7 +82,7 @@ public class GameService implements GameServiceLocal {
     /**
      * By the definition of the turn in this use of the game, player1 always
      * choose ROCK and player2 a random choice.
-     * @return {@code Result}
+     * @return {@code Round}
      */
     @GET
     @Path("playRound")    
@@ -79,7 +91,8 @@ public class GameService implements GameServiceLocal {
         Choice player1 = ROCK;
         Choice player2 = Choice.RANDOM();
         Result result = game.turn(player1, player2);
-        addRound(new Round(player1, player2, result));
+        Round round = new Round(player1, player2, result);
+        addRound(round);
         return result;
     }
     
@@ -117,8 +130,13 @@ public class GameService implements GameServiceLocal {
         playerRounds.clear();
     }
     
-    private void addRound(Round round) {
+    /**
+     * Add a new round
+     * @param round the new round
+     */
+    private void addRound(final Round round) {
         playerRounds.add(round);
+        dashboardService.addRoundResult(round.getResult());
     } 
     
 }

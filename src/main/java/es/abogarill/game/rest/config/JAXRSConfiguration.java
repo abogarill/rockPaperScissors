@@ -24,6 +24,7 @@ public class JAXRSConfiguration extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(es.abogarill.game.rest.service.DashboardService.class);
         resources.add(es.abogarill.game.rest.service.GameService.class);
     }
 }

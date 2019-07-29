@@ -3,13 +3,23 @@
     <head>
         <title>Rock, Paper, Scissors!</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/styles.css">
         <script src="js/game.js"></script>
     </head>
 
     <body>
-        <h1>Rock, Paper, Scissors!</h1>
-        <div>
-            <button id="playRound">Play Round</button>
+        <header>
+            <h1>Rock, Paper, Scissors!</h1> 
+            <nav>
+                <ul>
+                    <li><a href="index.html" target="_blank">Game</a></li>
+                    <li><a href="dashboard.html" target="_blank">Dashboard</a></li>
+                </ul>
+            </nav>            
+        </header>
+        
+        <div id="bodypage">
+            <button id="playRound">Play Round</button><button id="restartGame">Restart Game</button>
             <p>Number of rounds played:</p><input id="number-rounds-played" type="text" readonly="true"/>
             <p>Rounds played:</p>
             <table id="rounds-played" border="1">

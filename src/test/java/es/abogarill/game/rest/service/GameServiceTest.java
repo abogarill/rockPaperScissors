@@ -22,7 +22,8 @@ import static org.mockito.Mockito.when;
  */
 public class GameServiceTest {
     
-    private GameService service;
+    private DashboardService gameMasterService;
+    private GameService gameService;
     private Game game;
     
     public GameServiceTest() {
@@ -33,10 +34,13 @@ public class GameServiceTest {
      */
     @Before
     public void setUp() {
-        service = new GameService();
-        service.initialize();
+        gameMasterService = new DashboardService();
+        gameMasterService.initialize();
+        gameService = new GameService();
+        gameService.initialize();
+        gameService.setDashboardService(gameMasterService);
         game = mock(Game.class);
-        service.setGame(game);
+        gameService.setGame(game);
     }
     
     /**
@@ -47,11 +51,11 @@ public class GameServiceTest {
     public void testDrawTurn() throws Exception {
         Result expResult = DRAW;
         prepareGameMockForDrawResult();
-        
-        Result result = service.playRound();
+    
+        Result result = gameService.playRound();
         
         assertEquals(expResult, result);
-        assertEquals(new Integer(1), service.showNumberOfRounds());
+        assertEquals(new Integer(1), gameService.showNumberOfRounds());
     }
     
     /**
@@ -62,8 +66,8 @@ public class GameServiceTest {
     public void testPlayer1WinTurn() throws Exception {
         Result expResult = PLAYER1_WIN;
         prepareGameMockForPlayer1WinResult();
-        
-        Result result = service.playRound();
+    
+        Result result = gameService.playRound();
         
         assertEquals(expResult, result);
     }    
@@ -77,7 +81,7 @@ public class GameServiceTest {
         Result expResult = PLAYER2_WIN;
         prepareGameMockForPlayer2WinResult();
         
-        Result result = service.playRound();
+        Result result = gameService.playRound();
         
         assertEquals(expResult, result);
     }      
@@ -102,7 +106,7 @@ public class GameServiceTest {
     public void testNumberOfRoundsInitialized() throws Exception {
         Integer expResult = 0;
 
-        Integer result = service.showNumberOfRounds();
+        Integer result = gameService.showNumberOfRounds();
         
         assertEquals(expResult, result);
     }
@@ -115,9 +119,9 @@ public class GameServiceTest {
     public void testNumberOfRoundsOneAfterPlayRound() throws Exception {
         prepareGameMockForDrawResult(); //the result does not matter here 
         Integer expResult = 1;
-        service.playRound();
+        gameService.playRound();
 
-        Integer result = service.showNumberOfRounds();
+        Integer result = gameService.showNumberOfRounds();
         
         assertEquals(expResult, result);
     }
@@ -130,10 +134,10 @@ public class GameServiceTest {
     public void testRestartGame() throws Exception {
         prepareGameMockForDrawResult(); //the result does not matter here 
         Integer expCounterAfterRestart = 0;
-        service.playRound();
+        gameService.playRound();
 
-        service.restartGame();
-        final List<Round> roundsAfterRestart = service.showRoundsPlayed();
+        gameService.restartGame();
+        final List<Round> roundsAfterRestart = gameService.showRoundsPlayed();
         
         assertEquals(expCounterAfterRestart.intValue(), roundsAfterRestart.size());
     }
@@ -146,10 +150,10 @@ public class GameServiceTest {
     public void testShowTwoRoundsPlayed() throws Exception {
         prepareGameMockForDrawAndPlayer1ResultsAfterTwoRounds();
         Integer expCounterAfterRestart = 2;
-        service.playRound();
-        service.playRound();
+        gameService.playRound();
+        gameService.playRound();
         
-        final List<Round> roundsAfterRestart = service.showRoundsPlayed();
+        final List<Round> roundsAfterRestart = gameService.showRoundsPlayed();
         
         assertEquals(expCounterAfterRestart.intValue(), roundsAfterRestart.size());
             Round roundOne = roundsAfterRestart.get(0);

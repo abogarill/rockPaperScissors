@@ -6,7 +6,7 @@ $(function () {
     function playRound() {
         $.ajax({
             type: 'GET',
-            url: "http://localhost:8080/rockPaperScissorsGame-1.0/game/playRound",
+            url: "http://localhost:8080/rockPaperScissorsGame/game/playRound",
             contentType: "application/json",
             dataType: 'json',
             success: function (data) {
@@ -23,7 +23,7 @@ $(function () {
     function showRoundsPlayed() {
         $.ajax({
             type: 'GET',
-            url: "http://localhost:8080/rockPaperScissorsGame-1.0/game/showRoundsPlayed",
+            url: "http://localhost:8080/rockPaperScissorsGame/game/showRoundsPlayed",
             contentType: "application/json",
             dataType: 'json',            
             success: function (data) {
@@ -48,4 +48,52 @@ $(function () {
         });
         $("#number-rounds-played").val(count.toString());
     }
+    
+    $("#restartGame").click(function () {
+        restartGame();
+    });    
+    
+    function restartGame() {
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost:8080/rockPaperScissorsGame/game/restartGame",
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                showRoundsPlayed();
+            },
+            error: function (e) {
+                console.log("There was an error with your request...");
+                console.log("error: " + JSON.stringify(e));
+            }
+        });
+    }  
+    
+    $("#showAllRoundsPlayed").click(function () {
+        showAllRoundsPlayed();
+    });    
+    
+    function showAllRoundsPlayed() {
+        $.ajax({
+            type: 'GET',
+            url: "http://localhost:8080/rockPaperScissorsGame/game/showAllRoundsPlayed",
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                console.log("data: " + data);
+                var winPlayer1Counter = data.PLAYER1_WIN;
+                var winPlayer2Counter = data.PLAYER2_WIN;
+                var drawCounter = data.DRAW;
+                var totalCounter = winPlayer1Counter + winPlayer2Counter + drawCounter;
+                $("#total-rounds-played").val(totalCounter.toString());
+                $("#total-wins-player1").val(winPlayer1Counter.toString());
+                $("#total-wins-player2").val(winPlayer2Counter.toString());
+                $("#total-draws").val(drawCounter.toString());
+            },
+            error: function (e) {
+                console.log("There was an error with your request...");
+                console.log("error: " + JSON.stringify(e));
+            }
+        });
+    }  
 });
