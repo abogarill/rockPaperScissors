@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  * The Service life is binding to the Session life. 
  * @author abogarill
  */
-@Path("game")
+@Path("/")
 @SessionScoped
 @Stateful(name = "GameService", mappedName = "GameService")
 @Produces({MediaType.APPLICATION_JSON})
@@ -75,12 +75,12 @@ public class GameService implements GameServiceLocal {
     @GET
     @Path("playRound")    
     @Override
-    public String playRound() {
+    public Result playRound() {
         Choice player1 = ROCK;
         Choice player2 = Choice.RANDOM();
         Result result = game.turn(player1, player2);
         addRound(new Round(player1, player2, result));
-        return result.toString();
+        return result;
     }
     
     /**

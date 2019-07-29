@@ -3,6 +3,7 @@ package es.abogarill.game.rest.service;
 import es.abogarill.game.Choice;
 import static es.abogarill.game.Choice.ROCK;
 import es.abogarill.game.Game;
+import es.abogarill.game.Result;
 import static es.abogarill.game.Result.DRAW;
 import static es.abogarill.game.Result.PLAYER1_WIN;
 import static es.abogarill.game.Result.PLAYER2_WIN;
@@ -44,10 +45,10 @@ public class GameServiceTest {
      */
     @Test
     public void testDrawTurn() throws Exception {
-        String expResult = DRAW.toString();
+        Result expResult = DRAW;
         prepareGameMockForDrawResult();
         
-        String result = service.playRound();
+        Result result = service.playRound();
         
         assertEquals(expResult, result);
         assertEquals(new Integer(1), service.showNumberOfRounds());
@@ -59,10 +60,10 @@ public class GameServiceTest {
      */    
     @Test
     public void testPlayer1WinTurn() throws Exception {
-        String expResult = PLAYER1_WIN.toString();
+        Result expResult = PLAYER1_WIN;
         prepareGameMockForPlayer1WinResult();
         
-        String result = service.playRound();
+        Result result = service.playRound();
         
         assertEquals(expResult, result);
     }    
@@ -73,10 +74,10 @@ public class GameServiceTest {
      */       
     @Test
     public void testPlayer2WinTurn() throws Exception {
-        String expResult = PLAYER2_WIN.toString();
+        Result expResult = PLAYER2_WIN;
         prepareGameMockForPlayer2WinResult();
         
-        String result = service.playRound();
+        Result result = service.playRound();
         
         assertEquals(expResult, result);
     }      

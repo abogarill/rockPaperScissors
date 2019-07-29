@@ -1,9 +1,13 @@
 package es.abogarill.game;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import es.abogarill.game.serializer.RoundSerializer;
+
 /**
  * Represent a round of the game with players choice and the result 
  * @author abogarill
  */
+@JsonSerialize(using = RoundSerializer.class)
 public class Round {
     
     private Choice player1;

@@ -1,5 +1,6 @@
 package es.abogarill.game.rest.service;
 
+import es.abogarill.game.Result;
 import es.abogarill.game.Round;
 import java.util.List;
 import javax.ejb.Local;
@@ -22,7 +23,7 @@ public interface GameServiceLocal {
      */
     @GET
     @Path(value = "playRound")
-    String playRound();
+    Result playRound();
     
     /**
      * Showing the number of rounds played by that user so far.

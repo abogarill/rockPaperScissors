@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Rock, Paper, Scissors!</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="js/game.js"></script>
     </head>
+
     <body>
-        <h1>JAXRS!</h1>
+        <h1>Rock, Paper, Scissors!</h1>
+        <div>
+            <button id="playRound">Play Round</button>
+            <p>Number of rounds played:</p><input id="number-rounds-played" type="text" readonly="true"/>
+            <p>Rounds played:</p>
+            <table id="rounds-played" border="1">
+                <thead>
+                    <tr>
+                        <th>Round</th>
+                        <th>Player1</th>
+                        <th>Player2</th>
+                        <th>Result</th>                        
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </body>
 </html>
