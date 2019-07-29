@@ -6,7 +6,7 @@ $(function () {
     function playRound() {
         $.ajax({
             type: 'GET',
-            url: "http://localhost:8080/rockPaperScissorsGame-1.0-SNAPSHOT/game/playRound",
+            url: "http://localhost:8080/rockPaperScissorsGame-1.0/game/playRound",
             contentType: "application/json",
             dataType: 'json',
             success: function (data) {
@@ -23,7 +23,7 @@ $(function () {
     function showRoundsPlayed() {
         $.ajax({
             type: 'GET',
-            url: "http://localhost:8080/rockPaperScissorsGame-1.0-SNAPSHOT/game/showRoundsPlayed",
+            url: "http://localhost:8080/rockPaperScissorsGame-1.0/game/showRoundsPlayed",
             contentType: "application/json",
             dataType: 'json',            
             success: function (data) {
