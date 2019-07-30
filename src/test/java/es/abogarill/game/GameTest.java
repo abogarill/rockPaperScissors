@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test Game
+ * Test Core Game
  * @author abogarill
  */
 public class GameTest {

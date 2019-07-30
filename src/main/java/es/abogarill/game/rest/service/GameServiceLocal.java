@@ -26,14 +26,6 @@ public interface GameServiceLocal {
     Result playRound();
     
     /**
-     * Showing the number of rounds played by that user so far.
-     * @return number of round played by user
-     */
-    @GET
-    @Path("showNumberOfRounds")    
-    Integer showNumberOfRounds();
-    
-    /**
      * showing the rounds played, with 3 columns: what 1st player chose, 
      * what second chose, and the result of the round (that could be 
      * player 1 wins, player 2 wins or draw)

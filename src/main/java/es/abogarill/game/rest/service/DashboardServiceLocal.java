@@ -9,9 +9,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 /**
- * REST Game Service. 
- * One Service is created for each Session.
- * The Service life is binding to the Session life. 
+ * Dashboard Service: Contains the all players statistics
+ * The Service life is binding to the Application life. 
  * @author abogarill
  */
 @Local
@@ -24,8 +23,8 @@ public interface DashboardServiceLocal {
     void addRoundResult(final Result newResult);
     
     /**
-     * Show the number of rounds player by winner or draw
-     * @return the number of rounds player by winner or draw
+     * Show the number of rounds played by winner or draw
+     * @return the number of rounds played by winner or draw
      */
     @GET
     @Path("showAllRoundsPlayed")      

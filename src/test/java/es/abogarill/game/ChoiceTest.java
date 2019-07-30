@@ -74,4 +74,17 @@ public class ChoiceTest {
         boolean result = instance.beats(otherPlayer);
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of beats method: Scissors beats Paper
+     * Expected: true
+     */
+    @Test
+    public void testScissorsBeatsPaper() {
+        Choice otherPlayer = PAPER;
+        Choice instance = SCISSORS;
+        boolean expResult = true;
+        boolean result = instance.beats(otherPlayer);
+        assertEquals(expResult, result);
+    }
 }

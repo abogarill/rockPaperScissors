@@ -20,12 +20,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- * REST Game Service. 
- * One Service is created for each Session.
- * The Service life is binding to the Session life. 
- * @author abogarill
- */
 @Path("/")
 @SessionScoped
 @Stateful(name = "GameService", mappedName = "GameService")
@@ -39,10 +33,23 @@ public class GameService implements GameServiceLocal {
      */
     private DashboardServiceLocal dashboardService;
 
+    /**
+     * dashboardService setter
+     * @param dashboardService the dashboardService to inject
+     */
     @Inject
     public void setDashboardService(DashboardServiceLocal dashboardService) {
         this.dashboardService = dashboardService;
     }
+
+    /**
+     * dashboardService getter
+     * @return the dashboardService injected
+     */
+    public DashboardServiceLocal getDashboardService() {
+        return dashboardService;
+    }
+
     
     /**
      * Needed for Stateful EJB
@@ -60,7 +67,7 @@ public class GameService implements GameServiceLocal {
      */
     @PostConstruct
     @PostActivate
-    public void initialize() {
+    protected final void initialize() {
         if(playerRounds == null) {
             playerRounds = new ArrayList<>();
         }
@@ -72,7 +79,8 @@ public class GameService implements GameServiceLocal {
     private Game game;
     
     /**
-     * @param game the game to set
+     * game core setter
+     * @param game the game to inject
      */
     @Inject
     public void setGame(Game game) {
@@ -80,10 +88,13 @@ public class GameService implements GameServiceLocal {
     }
     
     /**
-     * By the definition of the turn in this use of the game, player1 always
-     * choose ROCK and player2 a random choice.
-     * @return {@code Round}
+     * game core getter
+     * @return game core injected
      */
+    public Game getGame() {
+        return game;
+    }
+    
     @GET
     @Path("playRound")    
     @Override
@@ -95,24 +106,7 @@ public class GameService implements GameServiceLocal {
         addRound(round);
         return result;
     }
-    
-    /**
-     * Showing the number of rounds played by that user so far.
-     * @return number of round played by user
-     */
-    @GET
-    @Path("showNumberOfRounds")    
-    @Override
-    public Integer showNumberOfRounds() {
-        return playerRounds.size();
-    }
 
-    /**
-     * showing the rounds played, with 3 columns: what 1st player chose, 
-     * what second chose, and the result of the round (that could be 
-     * player 1 wins, player 2 wins or draw)
-     * @return the result of the round (player 1 wins, player 2 wins or draw)
-     */
     @GET
     @Path("showRoundsPlayed")    
     @Override    

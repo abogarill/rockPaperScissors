@@ -20,10 +20,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- *
- * @author abogarill
- */
 @Path("/")
 @Startup
 @Singleton(name = "DashboardService", mappedName = "DashboardService")
@@ -42,12 +38,20 @@ public class DashboardService implements DashboardServiceLocal {
      * Keep the rounds for all players.
      */
     private Map<Result, Integer> allRounds;
+
+    /**
+     * All rounds map getter
+     * @return all round map
+     */
+    public Map<Result, Integer> getAllRounds() {
+        return allRounds;
+    }
     
     /**
      * Initialize the EJB
      */
     @PostConstruct
-    public void initialize() {
+    protected final void initialize() {
         if(allRounds == null) {
             allRounds = new HashMap<>();
             allRounds.put(PLAYER1_WIN, 0);
@@ -56,10 +60,6 @@ public class DashboardService implements DashboardServiceLocal {
         }
     }    
 
-    /**
-     * Add a new round result
-     * @param newResult the new round result
-     */    
     @Lock(LockType.WRITE)
     @Override
     public void addRoundResult(final Result newResult) {
@@ -68,10 +68,6 @@ public class DashboardService implements DashboardServiceLocal {
         }
     } 
     
-    /**
-     * Show the number of rounds player by winner or draw
-     * @return the number of rounds player by winner or draw
-     */
     @GET
     @Path("showAllRoundsPlayed")
     @Lock(LockType.READ)

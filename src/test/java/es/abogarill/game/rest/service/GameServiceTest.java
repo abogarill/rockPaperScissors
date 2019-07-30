@@ -14,15 +14,18 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Teste GameService
+ * Test GameService
  * @author abogarill
  */
 public class GameServiceTest {
     
-    private DashboardService gameMasterService;
+    private DashboardServiceLocal dashboardService;
     private GameService gameService;
     private Game game;
     
@@ -34,11 +37,10 @@ public class GameServiceTest {
      */
     @Before
     public void setUp() {
-        gameMasterService = new DashboardService();
-        gameMasterService.initialize();
+        dashboardService = spy(DashboardServiceLocal.class);
         gameService = new GameService();
         gameService.initialize();
-        gameService.setDashboardService(gameMasterService);
+        gameService.setDashboardService(dashboardService);
         game = mock(Game.class);
         gameService.setGame(game);
     }
@@ -55,7 +57,8 @@ public class GameServiceTest {
         Result result = gameService.playRound();
         
         assertEquals(expResult, result);
-        assertEquals(new Integer(1), gameService.showNumberOfRounds());
+        assertEquals(1, gameService.showRoundsPlayed().size());
+        verify(dashboardService).addRoundResult(expResult);
     }
     
     /**
@@ -70,6 +73,7 @@ public class GameServiceTest {
         Result result = gameService.playRound();
         
         assertEquals(expResult, result);
+        verify(dashboardService).addRoundResult(expResult);
     }    
     
     /**
@@ -84,6 +88,7 @@ public class GameServiceTest {
         Result result = gameService.playRound();
         
         assertEquals(expResult, result);
+        verify(dashboardService).addRoundResult(expResult);
     }      
     
     private void prepareGameMockForPlayer1WinResult(){
@@ -99,34 +104,6 @@ public class GameServiceTest {
     }      
     
     /**
-     * Test that the number is rounds at the beginning is zero.
-     * @throws java.lang.Exception if something wrong happened
-     */
-    @Test
-    public void testNumberOfRoundsInitialized() throws Exception {
-        Integer expResult = 0;
-
-        Integer result = gameService.showNumberOfRounds();
-        
-        assertEquals(expResult, result);
-    }
-    
-    /**
-     * Test that the number is one after play round.
-     * @throws java.lang.Exception if something wrong happened
-     */
-    @Test
-    public void testNumberOfRoundsOneAfterPlayRound() throws Exception {
-        prepareGameMockForDrawResult(); //the result does not matter here 
-        Integer expResult = 1;
-        gameService.playRound();
-
-        Integer result = gameService.showNumberOfRounds();
-        
-        assertEquals(expResult, result);
-    }
-    
-    /**
      * Test that round counter for user is zero and also the table is cleaned.
      * @throws java.lang.Exception if something wrong happened
      */
@@ -134,12 +111,13 @@ public class GameServiceTest {
     public void testRestartGame() throws Exception {
         prepareGameMockForDrawResult(); //the result does not matter here 
         Integer expCounterAfterRestart = 0;
-        gameService.playRound();
+        Result playResult = gameService.playRound();
 
         gameService.restartGame();
         final List<Round> roundsAfterRestart = gameService.showRoundsPlayed();
         
         assertEquals(expCounterAfterRestart.intValue(), roundsAfterRestart.size());
+        verify(dashboardService).addRoundResult(playResult);
     }
     
     /**
@@ -150,8 +128,8 @@ public class GameServiceTest {
     public void testShowTwoRoundsPlayed() throws Exception {
         prepareGameMockForDrawAndPlayer1ResultsAfterTwoRounds();
         Integer expCounterAfterRestart = 2;
-        gameService.playRound();
-        gameService.playRound();
+        Result play1 = gameService.playRound();
+        Result play2 = gameService.playRound();
         
         final List<Round> roundsAfterRestart = gameService.showRoundsPlayed();
         
@@ -163,12 +141,37 @@ public class GameServiceTest {
             Round roundTwo = roundsAfterRestart.get(1);
         assertEquals(ROCK, roundTwo.getPlayer1());
         assertNotNull(roundTwo.getPlayer2()); // because the choice is random
-        assertEquals(PLAYER1_WIN, roundTwo.getResult());        
+        assertEquals(PLAYER1_WIN, roundTwo.getResult());   
+        verify(dashboardService, times(2)).addRoundResult(any(Result.class));
     }    
+
+    /**
+     * Test of setDashboardService method, of class GameService.
+     * @throws java.lang.Exception if something wrong happened
+     */
+    @Test
+    public void testSetDashboardService() throws Exception {
+        DashboardServiceLocal dashboardService = new DashboardService();
+        GameService instance = new GameService();
+        instance.setDashboardService(dashboardService);
+        assertEquals(dashboardService, instance.getDashboardService());
+    }
+
+    /**
+     * Test of setGame method, of class GameService.
+     * @throws java.lang.Exception if something wrong happened
+     */
+    @Test
+    public void testSetGame() throws Exception {
+        Game game = new Game();
+        GameService instance = new GameService();
+        instance.setGame(game);
+        assertEquals(game, instance.getGame());
+    }
 
     private void prepareGameMockForDrawAndPlayer1ResultsAfterTwoRounds(){
         when(game.turn(any(Choice.class), any(Choice.class)))
             .thenReturn(DRAW).thenReturn(PLAYER1_WIN);
-        
-    }     
+    }        
+    
 }
