@@ -2,28 +2,62 @@
 <html>
     <head>
         <title>Rock, Paper, Scissors!</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="js/game.js"></script>
     </head>
 
-    <body>
-        <header>
-            <h1>Dashboard</h1> 
-            <nav>
-                <ul>
-                    <li><a href="index.html">Game</a></li>
-                    <li><a href="dashboard.html">Dashboard</a></li>
-                </ul>
-            </nav>            
-        </header>
+    <body onload="showRoundsPlayed();">
+        <div class="jumbotron text-center" style="margin-bottom:0">
+          <h1>Rock, Paper, Scissors!</h1>
+        </div>        
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Game</a>
+                </li>
+                <a class="navbar-brand" href="#">Dashboard</a>                
+                <li class="nav-item">
+                    <a class="nav-link" href="https://en.wikipedia.org/wiki/Rock%E2%80%93paper%E2%80%93scissors" target="_blank">Help</a>
+                </li>
+            </ul>  
+        </nav>    
         
-        <div id="bodypage">
-            <button id="showAllRoundsPlayed">Show all rounds played</button>
-            <p>Total rounds played:</p><input id="total-rounds-played" type="text" readonly="true"/>
-            <p>Total wins for player 1:</p><input id="total-wins-player1" type="text" readonly="true"/>
-            <p>Total wins for player 2:</p><input id="total-wins-player2" type="text" readonly="true"/>
-            <p>Total draws</p><input id="total-draws" type="text" readonly="true"/>
+        <div class="container" style="margin-top:30px">
+            <button type="button" class="btn btn-outline-success" id="showAllRoundsPlayed">Show all rounds played</button>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Total rounds played:</h5>
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" id="total-rounds-played" readonly="true">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Total wins for player 1:</h5>
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" id="total-wins-player1" readonly="true">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Total wins for player 2:</h5>
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" id="total-wins-player2" readonly="true">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Total draws</h5>
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" id="total-draws" readonly="true">
+                </div>
+            </div>
         </div>
     </body>
 </html>

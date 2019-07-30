@@ -1,4 +1,11 @@
 $(function () {
+    $(document).ready(reload()); 
+    
+    function reload() {
+        showRoundsPlayed(); 
+        showAllRoundsPlayed();
+    }
+    
     $("#playRound").click(function () {
         playRound();
     });
@@ -10,7 +17,6 @@ $(function () {
             contentType: "application/json",
             dataType: 'json',
             success: function (data) {
-                console.log("Result: " + data);
                 showRoundsPlayed();
             },
             error: function (e) {

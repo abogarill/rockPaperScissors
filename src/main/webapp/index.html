@@ -2,37 +2,55 @@
 <html>
     <head>
         <title>Rock, Paper, Scissors!</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="js/game.js"></script>
     </head>
 
-    <body>
-        <header>
-            <h1>Rock, Paper, Scissors!</h1> 
-            <nav>
-                <ul>
-                    <li><a href="index.html" target="_blank">Game</a></li>
-                    <li><a href="dashboard.html" target="_blank">Dashboard</a></li>
-                </ul>
-            </nav>            
-        </header>
+    <body onload="showRoundsPlayed();">
+        <div class="jumbotron text-center" style="margin-bottom:0">
+          <h1>Rock, Paper, Scissors!</h1>
+        </div>        
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <ul class="navbar-nav">
+                <a class="navbar-brand" href="#">Game</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://en.wikipedia.org/wiki/Rock%E2%80%93paper%E2%80%93scissors" target="_blank">Help</a>
+                </li>
+            </ul>  
+        </nav>            
         
-        <div id="bodypage">
-            <button id="playRound">Play Round</button><button id="restartGame">Restart Game</button>
-            <p>Number of rounds played:</p><input id="number-rounds-played" type="text" readonly="true"/>
-            <p>Rounds played:</p>
-            <table id="rounds-played" border="1">
-                <thead>
-                    <tr>
-                        <th>Round</th>
-                        <th>Player1</th>
-                        <th>Player2</th>
-                        <th>Result</th>                        
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+        <div class="container" style="margin-top:30px">
+            <button type="button" class="btn btn-outline-success" id="playRound">Play Round</button>
+            <button type="button" class="btn btn-outline-danger" id="restartGame">Restart Game</button>            
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5>Number of rounds played:</h5>
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" id="number-rounds-played"  readonly="true">
+                </div>
+            </div>            
+            
+            <div class="form-group">
+              <h5>Rounds played:</h5>
+              <table id="rounds-played" class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>Round</th>
+                          <th>Player 1</th>
+                          <th>Player 2</th>
+                          <th>Result</th>                        
+                      </tr>
+                  </thead>
+                  <tbody></tbody>
+              </table>
+            </div> 
         </div>
     </body>
 </html>
