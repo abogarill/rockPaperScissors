@@ -67,7 +67,7 @@ public class GameService implements GameServiceLocal {
      */
     @PostConstruct
     @PostActivate
-    protected final void initialize() {
+    protected void initialize() {
         if(playerRounds == null) {
             playerRounds = new ArrayList<>();
         }
