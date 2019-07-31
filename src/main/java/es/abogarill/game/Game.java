@@ -8,6 +8,9 @@ import javax.ejb.Singleton;
  */
 @Singleton
 public class Game {
+
+    public Game() {
+    }
     
     /**
      * Turn game: Rock beat Scissors, Scissors beat Paper, Paper beat Rock, others is a draw 
